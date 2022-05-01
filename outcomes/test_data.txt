@@ -1,3 +1,31 @@
-The graph has 264346 vertices and 733846edges
-reading file res/USA-road-d.NY.gr time use 239ms.
-Algorithm time use 153ms.
+The graph has 264346 vertices and 733846 edges.
+reading file res/USA-road-d.NY.gr time use 237ms.
+Algorithm time use 155ms.
+
+The graph has 1070376 vertices and 2712798 edges.
+reading file res/USA-road-d.FLA.gr time use 898ms.
+Algorithm time use 640ms.
+
+The graph has 1524453 vertices and 3897636 edges.
+reading file res/USA-road-d.NE.gr time use 1312ms.
+Algorithm time use 998ms.
+
+The graph has 23947347 vertices and 58333344 edges.
+reading file res/USA-road-d.USA.gr time use 19752ms.
+Algorithm time use 18118ms.
+/*****************上面是串行优先队列所用时间***********************/
+The graph has 264346 vertices and 733846 edges.
+reading file res/USA-road-d.NY.gr time use 235ms.
+Algorithm time use 165057ms.
+/*****************上面是串行数组实现所用时间***********************/
+4线程
+The graph has 264346 vertices and 733846 edges.
+reading file res/USA-road-d.NY.gr time use 248ms.
+Algorithm time use 79045ms.
+8线程
+The graph has 264346 vertices and 733846 edges.
+reading file res/USA-road-d.NY.gr time use 252ms.
+Algorithm time use 39648ms.
+/*****************上面是并行数据结构使用数组实现所用时间***********************/
+The graph has 264346 vertices and 733846 edges.
+reading file res/USA-road-d.NY.gr time use 245ms.

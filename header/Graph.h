@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <fstream>
 #include <pthread.h>
+#include <semaphore.h>
+#include <thread>
 #include <cmath>
 /**
  * @brief 这个头文件定义了图相关的数据结构
@@ -21,8 +23,9 @@
  */
 namespace CONFIG
 {
-    const int MAX_VERTEX_NUM = 58333344;                 //点的最大个数
+    const int MAX_VERTEX_NUM = 58333344;             //点的最大个数
     const int INF = std::numeric_limits<int>::max(); //定义无法到达的边
+    const int THREAD_COUNT = 8;
 } // namespace CONFIG
 
 //边数据结构
@@ -35,33 +38,44 @@ struct edge
 struct node
 {
     int distance, u;
-    friend bool operator>(const node &a,const node &b)
+    friend bool operator>(const node &a, const node &b)
     {
         return a.distance > b.distance;
     }
 };
+typedef struct
+{
+    int *dis;
+    bool *used;
+    int start;
+    int end;
+    int smallest;
+    int id;
+} thread_param_t;
 
 class Graph
 {
     std::vector<edge> *G;   //邻接数组
-    int vertex_num;                                //图的点数
-    int edge_num;                                  //图的边数
+    int vertex_num;         //图的点数
+    int edge_num;           //图的边数
     int *shortest_distance; //保存算法中计算出来的最短距离
     bool *used;             //检查该点是否判断过
 public:
     Graph(int v, int e) : vertex_num(v), edge_num(e)
     {
-        G=new std::vector<edge>[CONFIG::MAX_VERTEX_NUM];
-        shortest_distance=new int[CONFIG::MAX_VERTEX_NUM];
-        used=new bool[CONFIG::MAX_VERTEX_NUM];
+        G = new std::vector<edge>[CONFIG::MAX_VERTEX_NUM];
+        shortest_distance = new int[CONFIG::MAX_VERTEX_NUM];
+        used = new bool[CONFIG::MAX_VERTEX_NUM];
     }
-    Graph(const std::string &file_name){
-        G=new std::vector<edge>[CONFIG::MAX_VERTEX_NUM];
-        shortest_distance=new int[CONFIG::MAX_VERTEX_NUM];
-        used=new bool[CONFIG::MAX_VERTEX_NUM];
+    Graph(const std::string &file_name)
+    {
+        G = new std::vector<edge>[CONFIG::MAX_VERTEX_NUM];
+        shortest_distance = new int[CONFIG::MAX_VERTEX_NUM];
+        used = new bool[CONFIG::MAX_VERTEX_NUM];
         get_data(file_name);
     }
-    ~Graph(){
+    ~Graph()
+    {
         delete[] G;
         delete[] shortest_distance;
         delete[] used;
@@ -88,4 +102,6 @@ public:
     void dijkstra_serial_with_priority_queue(int source);
 
     void dijkstra_parallel(int source);
+
+    void dijkstra_parallel_static(int source);
 };
