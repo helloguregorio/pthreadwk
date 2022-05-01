@@ -1,0 +1,3 @@
+The graph has 264346 vertices and 733846edges
+reading file res/USA-road-d.NY.gr time use 239ms.
+Algorithm time use 153ms.
